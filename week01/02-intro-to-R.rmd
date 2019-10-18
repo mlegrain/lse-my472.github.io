@@ -159,6 +159,7 @@ With vectors we can carry out some of the most fundamental tasks in data analysi
 ```{r}
 mean(math_scores)
 min(math_scores - verbal_scores)
+min(math_scores) - min(verbal_scores) # careful!
 summary(verbal_scores)
 ```
 
@@ -175,7 +176,7 @@ It's easy to pull out specific entries in a vector using `[]`. For example,
 math_scores[3]
 math_scores[1:3]
 math_scores[-(4:5)]
-math_scores[which(verbal_scores >= 90)]
+math_scores[which(verbal_scores >= 90)] # which is giving you location not value
 math_scores[3] <- 92
 math_scores
 ```

@@ -4,13 +4,15 @@ We often want to convert the format in which a data frame is structured, from wi
 
 ```{r}
 d <- read.csv("unvoting.csv", stringsAsFactors=F)
+head(d)
 dd <- d[d$CountryAbb %in% c("HUN", "AUS") & d$Year %in% 2010:2012, 
         c("Year", "CountryAbb", "idealpoint")]
 
 # converting to wide format
 library(reshape2)
 (dc <- dcast(dd, CountryAbb ~ Year, value.var="idealpoint"))
-
+head(dd) # long
+head(dc) # wide
 # converting back to long format
 melt(dc, id.vars=c("CountryAbb"), value.name="idealpoint")
 ```
@@ -25,8 +27,7 @@ aggregate(idealpoint ~ CountryAbb, data=d, FUN=median)
 aggregate(PctAgreeRUSSIA ~ Year, data=d, FUN=mean)
 plot(aggregate(PctAgreeRUSSIA ~ Year, data=d, FUN=mean), type="l")
 
-aggregate(idealpoint ~ CountryAbb, data=d, FUN=length)
-
+aggregate(idealpoint ~ CountryAbb, data=d, FUN=length) # number of rows per category, here country
 ```
 
 ## Merging datasets
@@ -40,6 +41,11 @@ students <- data.frame(name = c("Paul", "Peter", "Amy", "Megan", "Selena"),
 grades <- data.frame(name = c("Amy", "Megan", "Peter", "Drew"),
                      grade = c("A", "B+", "A-", "B"),
                      stringsAsFactors=FALSE)
+str(grades)
+#grades <- data.frame(name = c("Amy", "Megan", "Peter", "Drew"),
+#                     grade = c("A", "B+", "A-", "B"),
+#                     stringsAsFactors=TRUE)
+#str(grades)
 
 merge(students, grades)
 # we can be more specific about how to merge
